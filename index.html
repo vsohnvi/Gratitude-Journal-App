@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>One-50 — One day. One thought.</title>
+  <title>Entry — One day. One thought.</title>
   <style>
     :root {
       --bg-black: #000000;
       --card-bg: #1C1C1E;
       --text-white: #FFFFFF;
       --accent-linen: #EAE3D2;
+      --accent-gold: #FFD60A;
       --accent-olive: #7B886F;
       --text-muted: #8E8E93;
       --border-color: #2C2C2E;
@@ -31,6 +32,7 @@
       color: var(--text-white);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     /* Fixed Navigation Header */
@@ -39,6 +41,7 @@
       top: 0;
       background-color: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       z-index: 1000;
       border-bottom: 1px solid var(--border-color);
     }
@@ -47,9 +50,16 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 8%;
+      padding: 16px 5%;
       max-width: 1200px;
       margin: 0 auto;
+    }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
     }
 
     .brand {
@@ -57,12 +67,18 @@
       font-weight: 700;
       letter-spacing: -0.02em;
       color: var(--text-white);
-      text-decoration: none;
+    }
+
+    .header-logo-img {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      object-fit: cover;
     }
 
     .nav-links {
       display: flex;
-      gap: 24px;
+      gap: 20px;
     }
 
     .nav-links a {
@@ -77,12 +93,20 @@
       color: var(--text-white);
     }
 
+    .footer-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      object-fit: cover;
+    }
+
     /* View Wrappers */
     .view {
       display: none;
       max-width: 1100px;
       margin: 0 auto;
-      padding: 40px 24px 80px;
+      padding: 40px 20px 80px;
     }
 
     .view.active {
@@ -92,22 +116,26 @@
     /* Landing Page Hero */
     .hero {
       text-align: center;
-      padding: 80px 0 40px;
+      padding: 60px 0 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.2rem);
+      font-size: clamp(2.2rem, 7vw, 4.2rem);
       font-weight: 700;
       letter-spacing: -0.03em;
-      line-height: 1.1;
+      line-height: 1.15;
       margin-bottom: 20px;
     }
 
     .hero p {
-      font-size: 1.25rem;
+      font-size: clamp(1rem, 3.5vw, 1.25rem);
       color: var(--text-muted);
       max-width: 620px;
       margin: 0 auto 32px;
+      padding: 0 10px;
     }
 
     .cta-btn {
@@ -118,116 +146,125 @@
       border-radius: 99px;
       font-weight: 600;
       text-decoration: none;
-      transition: opacity 0.2s ease;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      width: 100%;
+      max-width: 280px;
+      text-align: center;
     }
 
     .cta-btn:hover {
       opacity: 0.9;
+      transform: translateY(-1px);
     }
 
     /* Section Typography */
     .section-title {
       text-align: center;
-      font-size: 2.2rem;
+      font-size: clamp(1.75rem, 5vw, 2.2rem);
       font-weight: 700;
       letter-spacing: -0.02em;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .section-subtitle {
       text-align: center;
       color: var(--text-muted);
-      font-size: 1.1rem;
-      margin-bottom: 48px;
+      font-size: clamp(0.95rem, 3vw, 1.1rem);
+      margin-bottom: 40px;
+      padding: 0 10px;
     }
 
-    /* How It Works Showcase Section */
-    .how-it-works {
-      margin-top: 80px;
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 28px;
-      padding: 48px;
+    /* App Showcase Section */
+    .app-showcase-section {
+      margin-top: 60px;
       scroll-margin-top: 100px;
     }
 
-    .how-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
-
-    .tab-btn {
-      background: transparent;
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 10px 20px;
-      border-radius: 99px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
-    }
-
-    .tab-btn.active, .tab-btn:hover {
-      background-color: var(--accent-linen);
-      color: var(--bg-black);
-      border-color: var(--accent-linen);
-    }
-
-    .tab-content {
-      display: none;
+    .showcase-grid {
+      display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 40px;
       align-items: center;
     }
 
-    .tab-content.active {
-      display: grid;
+    /* Left Side: Numbered Features with Increased Spacing & Linen Accent */
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
     }
 
-    @media (max-width: 768px) {
-      .tab-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
+    .feature-item {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    /* Real Screenshot Display Container */
-    .screenshot-container {
+    .feature-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .number-box {
+      background-color: var(--accent-linen);
+      color: var(--bg-black);
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .feature-item h3 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .feature-item p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.55;
+    }
+
+    /* Right Side: Screenshot */
+    .screenshot-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
+      width: 100%;
     }
 
-    .app-screenshot {
-      max-width: 100%;
-      max-height: 520px;
-      width: auto;
+    .hero-screenshot {
+      width: 100%;
+      max-width: 310px;
       height: auto;
       border-radius: 32px;
       border: 4px solid var(--border-color);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
       object-fit: contain;
     }
 
     /* Built To Keep You Consistent Grid */
     .consistency-section {
-      margin-top: 100px;
+      margin-top: 80px;
     }
 
     .consistency-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
     }
 
     .consistency-card {
       background-color: var(--card-bg);
       border-radius: 20px;
-      padding: 36px;
+      padding: 28px;
       border: 1px solid var(--border-color);
     }
 
@@ -239,37 +276,37 @@
       font-weight: 700;
       padding: 4px 10px;
       border-radius: 99px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       text-transform: uppercase;
     }
 
     .consistency-card h3 {
-      font-size: 1.35rem;
-      margin-bottom: 12px;
+      font-size: 1.25rem;
+      margin-bottom: 10px;
       color: var(--text-white);
     }
 
     .consistency-card p {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
     }
 
     /* Testimonials Section */
     .testimonials-section {
-      margin-top: 100px;
+      margin-top: 80px;
     }
 
     .testimonials-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
     }
 
     .testimonial-card {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 20px;
-      padding: 32px;
+      padding: 28px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -277,7 +314,7 @@
 
     .testimonial-card p {
       color: var(--text-white);
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-style: italic;
       margin-bottom: 20px;
     }
@@ -289,8 +326,8 @@
     }
 
     .avatar-circle {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background-color: var(--accent-linen);
       color: var(--bg-black);
@@ -298,22 +335,23 @@
       align-items: center;
       justify-content: center;
       font-weight: 700;
+      font-size: 0.85rem;
     }
 
     .user-info .name {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
     }
 
     .user-info .role {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
     }
 
     /* Legal Pages Container */
     .legal-container {
       background-color: var(--card-bg);
-      padding: 48px;
+      padding: clamp(24px, 5vw, 48px);
       border-radius: 24px;
       border: 1px solid var(--border-color);
       max-width: 800px;
@@ -321,25 +359,25 @@
     }
 
     .legal-container h1 {
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 5vw, 2rem);
       margin-bottom: 8px;
     }
 
     .legal-container .effective-date {
       color: var(--text-muted);
       font-size: 0.85rem;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
     .legal-container h2 {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       color: var(--accent-linen);
-      margin: 28px 0 12px;
+      margin: 24px 0 10px;
     }
 
     .legal-container p, .legal-container ul {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       margin-bottom: 16px;
     }
 
@@ -354,19 +392,22 @@
     /* Footer / Contact */
     footer {
       border-top: 1px solid var(--border-color);
-      padding: 48px 8% 32px;
+      padding: 40px 5% 32px;
       text-align: center;
       color: var(--text-muted);
       font-size: 0.85rem;
       max-width: 1200px;
       margin: 40px auto 0;
       scroll-margin-top: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     footer a {
       color: var(--text-muted);
       text-decoration: underline;
-      margin: 0 8px;
+      margin: 0 6px;
     }
 
     footer a:hover {
@@ -374,23 +415,55 @@
     }
 
     .footer-contact {
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .footer-contact h4 {
       color: var(--text-white);
-      font-size: 1.1rem;
-      margin-bottom: 8px;
+      font-size: 1rem;
+      margin-bottom: 6px;
     }
 
     .footer-contact a {
       color: var(--accent-linen);
-      font-size: 1rem;
+      font-size: 0.95rem;
       text-decoration: none;
     }
 
     .footer-contact a:hover {
       text-decoration: underline;
+    }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 840px) {
+      .showcase-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .features-list {
+        gap: 32px;
+      }
+
+      .screenshot-wrapper {
+        order: -1;
+      }
+
+      .hero-screenshot {
+        max-width: 270px;
+      }
+
+      nav {
+        padding: 14px 16px;
+      }
+
+      .nav-links {
+        gap: 14px;
+      }
+
+      .nav-links a {
+        font-size: 0.88rem;
+      }
     }
   </style>
 </head>
@@ -398,7 +471,11 @@
 
   <header>
     <nav>
-      <a href="#" class="brand" onclick="navigateTo('landing', 'top')">One-50</a>
+      <a href="#" class="brand-container" onclick="navigateTo('landing', 'top')">
+        <span class="brand">Entry</span>
+        <img src="screenshot-4.png" alt="Entry Logo" class="header-logo-img">
+      </a>
+      
       <div class="nav-links">
         <a href="#" onclick="navigateTo('landing', 'top')">Home</a>
         <a href="#" onclick="navigateTo('landing', 'features')">Features</a>
@@ -416,65 +493,42 @@
       <a href="#download" class="cta-btn">Start 7-Day Free Trial</a>
     </section>
 
-    <!-- How It Works / Screenshots Showcase Section -->
-    <section class="how-it-works" id="features">
-      <h2 class="section-title">How It Works</h2>
-      <p class="section-subtitle">Designed as a daily evening sanctuary free from cognitive noise.</p>
+    <!-- Side-by-Side Features Showcase -->
+    <section class="app-showcase-section" id="features">
+      <h2 class="section-title">Core Features</h2>
+      <p class="section-subtitle">Everything you need. Nothing you don't.</p>
       
-      <div class="how-tabs">
-        <button class="tab-btn active" onclick="switchTab(event, 'tab-write')">1. The Daily Entry</button>
-        <button class="tab-btn" onclick="switchTab(event, 'tab-lock')">2. Midnight Lockout</button>
-        <button class="tab-btn" onclick="switchTab(event, 'tab-history')">3. Calendar History</button>
-      </div>
+      <div class="showcase-grid">
+        <!-- Clean Numbered Features on Left -->
+        <div class="features-list">
+          <div class="feature-item">
+            <div class="feature-header">
+              <div class="number-box">1</div>
+              <h3>Intentional</h3>
+            </div>
+            <p>We limit you to 150 characters to be intentional with your journaling.</p>
+          </div>
 
-      <!-- Tab 1: Write -->
-      <div id="tab-write" class="tab-content active">
-        <div>
-          <h3 style="font-size: 1.8rem; margin-bottom: 16px;">Express gratitude in 30 seconds.</h3>
-          <p style="color: var(--text-muted); font-size: 1.05rem;">When you open One-50, you are greeted with a pure black workspace and a single question: <em>"What is one good thing that happened today?"</em></p>
-          <ul style="color: var(--text-muted); margin-top: 16px; padding-left: 20px;">
-            <li>150-character hard limit stops long-form strain.</li>
-            <li>Live character counter ticks down cleanly.</li>
-            <li>Auto-focused keyboard gets you right to work.</li>
-          </ul>
-        </div>
-        <div class="screenshot-container">
-          <!-- Replace src="screenshot-1.png" with your actual image path -->
-          <img src="screenshot-1.png" alt="One-50 Daily Entry Screen" class="app-screenshot">
-        </div>
-      </div>
+          <div class="feature-item">
+            <div class="feature-header">
+              <div class="number-box">2</div>
+              <h3>Simple</h3>
+            </div>
+            <p>We give you a simple and clean interface to help remove you from distractions.</p>
+          </div>
 
-      <!-- Tab 2: Lock -->
-      <div id="tab-lock" class="tab-content">
-        <div>
-          <h3 style="font-size: 1.8rem; margin-bottom: 16px;">A journal that can't be rewritten.</h3>
-          <p style="color: var(--text-muted); font-size: 1.05rem;">Consistency requires boundaries. At 9:00 PM, a quiet nudge invites you to write. At 12:00 AM Midnight, the day seals permanently.</p>
-          <ul style="color: var(--text-muted); margin-top: 16px; padding-left: 20px;">
-            <li>Zero backfilling or retro-editing allowed.</li>
-            <li>Builds real daily habit urgency.</li>
-            <li>Suppress notification when completed early.</li>
-          </ul>
+          <div class="feature-item">
+            <div class="feature-header">
+              <div class="number-box">3</div>
+              <h3>Reflect</h3>
+            </div>
+            <p>We give you a calendar view embedded with global search functionalities to help you reflect.</p>
+          </div>
         </div>
-        <div class="screenshot-container">
-          <!-- Replace src="screenshot-2.png" with your actual image path -->
-          <img src="screenshot-2.png" alt="One-50 Midnight Lock Screen" class="app-screenshot">
-        </div>
-      </div>
 
-      <!-- Tab 3: History -->
-      <div id="tab-history" class="tab-content">
-        <div>
-          <h3 style="font-size: 1.8rem; margin-bottom: 16px;">Track your weekly momentum.</h3>
-          <p style="color: var(--text-muted); font-size: 1.05rem;">Watch your consistency take shape through sleek 7-ring weekly indicators and month/year calendar heatmaps.</p>
-          <ul style="color: var(--text-muted); margin-top: 16px; padding-left: 20px;">
-            <li>Interactive Month Grid & Year View.</li>
-            <li>Instant global keyword search across stored logs.</li>
-            <li>Read-only sheets safeguard historical memories.</li>
-          </ul>
-        </div>
-        <div class="screenshot-container">
-          <!-- Replace src="screenshot-3.png" with your actual image path -->
-          <img src="screenshot-3.png" alt="One-50 Calendar History Screen" class="app-screenshot">
+        <!-- Single Screenshot on Right -->
+        <div class="screenshot-wrapper">
+          <img src="screenshot-1.png" alt="Entry App Screen" class="hero-screenshot">
         </div>
       </div>
     </section>
@@ -512,7 +566,7 @@
 
       <div class="testimonials-grid">
         <div class="testimonial-card">
-          <p>"I’ve started and abandoned every journal app on the market. One-50 is the only one I've kept for 30 straight days because the 150-character limit takes away the pressure."</p>
+          <p>"I’ve started and abandoned every journal app on the market. Entry is the only one I've kept for 30 straight days because the 150-character limit takes away the pressure."</p>
           <div class="testimonial-user">
             <div class="avatar-circle">AN</div>
             <div class="user-info">
@@ -553,16 +607,16 @@
       <h1>Terms & Conditions</h1>
       <p class="effective-date">Last Updated: August 2026</p>
 
-      <p>Welcome to <strong>One-50</strong> ("App", "we", "us", or "our"). By downloading, accessing, or using our mobile application and related website services, you agree to be bound by these Terms & Conditions ("Terms"). If you do not agree to these terms, please do not use the service.</p>
+      <p>Welcome to <strong>Entry</strong> ("App", "we", "us", or "our"). By downloading, accessing, or using our mobile application and related website services, you agree to be bound by these Terms & Conditions ("Terms"). If you do not agree to these terms, please do not use the service.</p>
 
       <h2>1. Description of Service</h2>
-      <p>One-50 provides a minimalist mobile daily journal service that enforces a strict 150-character limit per day and locks daily entries permanently at 12:00 AM local time. The app operates on a daily habit mechanism backed by optional push reminders.</p>
+      <p>Entry provides a minimalist mobile daily journal service that enforces a strict 150-character limit per day and locks daily entries permanently at 12:00 AM local time. The app operates on a daily habit mechanism backed by optional push reminders.</p>
 
       <h2>2. Accounts and Authentication</h2>
       <p>To use the cloud synchronization capabilities of the app, you must register using Sign In with Apple, Google Sign-In, or email and password. You are solely responsible for maintaining the confidentiality of your account credentials and for all activities conducted under your account.</p>
 
       <h2>3. Subscriptions, Trials & Billing</h2>
-      <p>One-50 offers a 7-day free trial requiring no upfront payment information. Following the trial period, access to core app functions requires an active paid subscription (Monthly or Discounted Annual).</p>
+      <p>Entry offers a 7-day free trial requiring no upfront payment information. Following the trial period, access to core app functions requires an active paid subscription (Monthly or Discounted Annual).</p>
       <ul>
         <li>Payments will be charged through your Apple ID account upon purchase confirmation.</li>
         <li>Subscriptions automatically renew unless canceled at least 24 hours before the end of the active billing period.</li>
@@ -576,7 +630,7 @@
       <p>We strive to keep the service operational continuously; however, we reserve the right to modify, suspend, or discontinue any aspect of the service without prior notice for routine maintenance or system improvements.</p>
 
       <h2>6. Limitation of Liability</h2>
-      <p>To the maximum extent permitted by applicable law, One-50 shall not be liable for any indirect, incidental, special, or consequential damages resulting from your use of, or inability to use, the service or lost journal entries.</p>
+      <p>To the maximum extent permitted by applicable law, Entry shall not be liable for any indirect, incidental, special, or consequential damages resulting from your use of, or inability to use, the service or lost journal entries.</p>
 
       <h2>7. Contact Information</h2>
       <p>If you have questions regarding these Terms, please contact us at <a href="mailto:team@spekfinancial.com" style="color: var(--accent-linen);">team@spekfinancial.com</a>.</p>
@@ -589,7 +643,7 @@
       <h1>Privacy Policy</h1>
       <p class="effective-date">Last Updated: August 2026</p>
 
-      <p>At <strong>One-50</strong>, your personal reflections are considered private sanctuary data. We operate under a strict, minimal data-collection philosophy. This Privacy Policy outlines what information we collect, how it is used, and how it is secured.</p>
+      <p>At <strong>Entry</strong>, your personal reflections are considered private sanctuary data. We operate under a strict, minimal data-collection philosophy. This Privacy Policy outlines what information we collect, how it is used, and how it is secured.</p>
 
       <h2>1. Information We Collect</h2>
       <p>We exclusively collect only the minimal data necessary to provide cloud synchronization for your personal daily journal:</p>
@@ -626,12 +680,14 @@
 
   <!-- Footer / Contact Section -->
   <footer id="contact">
+    <img src="screenshot-4.png" alt="Entry Logo" class="footer-logo-img">
+
     <div class="footer-contact">
       <h4>Have questions or need support?</h4>
       <a href="mailto:team@spekfinancial.com">team@spekfinancial.com</a>
     </div>
 
-    <p>&copy; 2026 One-50. Built for daily intentionality.</p>
+    <p>&copy; 2026 Entry. Built for daily intentionality.</p>
     <p style="margin-top: 12px;">
       <a href="#" onclick="navigateTo('landing', 'top')">Home</a> | 
       <a href="#" onclick="showView('terms')">Terms & Conditions</a> | 
@@ -658,14 +714,6 @@
           }
         }, 50);
       }
-    }
-
-    function switchTab(evt, tabId) {
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-      
-      evt.target.classList.add('active');
-      document.getElementById(tabId).classList.add('active');
     }
   </script>
 </body>
