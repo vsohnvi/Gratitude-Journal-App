@@ -145,56 +145,21 @@ nav {
   transform: translateY(-1px);
 }
 
-/* Hero button row (primary CTA + App Store badge) */
-.hero-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
-}
-
-/* App Store badge button */
-.app-store-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background-color: var(--text-white);
-  color: var(--bg-black);
-  padding: 10px 22px 10px 18px;
-  border-radius: 12px;
-  text-decoration: none;
-  border: 1px solid var(--border-color);
+/* App Store badge (replaces the old free-trial button on the hero) */
+.app-store-badge-link {
+  display: inline-block;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.app-store-btn:hover {
-  opacity: 0.9;
+.app-store-badge-link:hover {
+  opacity: 0.85;
   transform: translateY(-1px);
 }
 
-.apple-icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
-.app-store-btn-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-  text-align: left;
-}
-
-.app-store-btn-small {
-  font-size: 0.68rem;
-  font-weight: 500;
-}
-
-.app-store-btn-large {
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+.app-store-badge {
+  height: 54px;
+  width: auto;
+  display: block;
 }
 
 /* Section Typography */
